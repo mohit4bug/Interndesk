@@ -1,0 +1,167 @@
+.filter-menu {
+    position: absolute;
+    height: calc(100vh);
+    width: 300px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    right: 0;
+    border-left: 1px solid rgb(230, 230, 230);
+    padding: 30px 20px;
+    transition: 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+
+    .filter-top {
+        display: flex;
+        gap: 15px;
+        align-items: flex-end;
+
+        h1 {
+            font-size: 25px;
+            color: #303030;
+        }
+
+        .reset-filter {
+            color: #4169E1;
+            cursor: pointer;
+        }
+    }
+
+    .filter-bottom {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 20px 0px;
+
+
+        .filter-section {
+            height: auto;
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+
+            .filter-heading {
+                color: #303030;
+                font-size: 18px;
+            }
+
+            .filter-content {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+
+                .single-filter-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+
+                    input[type="radio"]:checked {
+                        accent-color: #4169E1;
+                    }
+
+                    label {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            .filter-content-course {
+                display: flex;
+                width: 100%;
+                flex-wrap: wrap;
+                overflow-y: auto;
+                max-height: 300px;
+                gap: 10px;
+
+
+                .radio-hidden-course {
+                    accent-color: #4169E1;
+                }
+
+                .course-label {
+                    height: 30px;
+                    width: fit-content;
+                    padding: 5px 10px;
+                    background: #4169e150;
+                    border-radius: 30px;
+                    cursor: pointer;
+                    display: flex;
+                    gap: 10px;
+                    place-items: center;
+                    font-size: 12px;
+                    font-weight: normal;
+                }
+
+            }
+
+            .filter-content-locations {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .preferred-locations-input {
+                    height: 30px;
+                    border: none;
+                    border-radius: 2px;
+                    background: transparent;
+                    border: 1px solid rgb(200, 200, 200);
+                    padding-left: 10px;
+                    outline: none;
+
+
+                }
+            }
+
+            .filter-content-status {
+                height: fit-content;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .single-status-div {
+                    display: flex;
+                    gap: 5px;
+                    align-items: center;
+
+                    label {
+                        font-size: 14px;
+                    }
+
+                    input {
+                        accent-color: #4169E1;
+                    }
+                }
+
+            }
+
+        }
+
+
+
+    }
+
+
+
+    .bg-colored {
+        font-size: 12px;
+        border: none;
+        outline: none;
+        background: #4169E1;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 30px;
+        width: 100%;
+        gap: 5px;
+        border-radius: 2px;
+    }
+}

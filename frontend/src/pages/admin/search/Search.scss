@@ -1,0 +1,90 @@
+.search {
+    height: calc(100vh);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+
+    hr {
+        border: none;
+        height: 0.5px;
+        color: rgb(200, 200, 200);
+        background-color: rgb(200, 200, 200);
+    }
+
+    .top {
+        height: auto;
+        width: 100%;
+        padding: 20px 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        h1 {
+            color: #303030;
+            font-size: 30px;
+        }
+
+        .buttons {
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .bg-colored {
+                font-size: 12px;
+                border: none;
+                outline: none;
+                background: #4169E1;
+                color: white;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 30px;
+                width: 100px;
+                gap: 5px;
+                border-radius: 2px;
+            }
+
+            .borderd {
+                font-size: 12px;
+                border: none;
+                outline: none;
+                width: 100px;
+                border: 2px solid #4169E1;
+                color: #4169E1;
+                background: transparent;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 30px;
+                gap: 5px;
+                border-radius: 2px;
+
+                &:hover {
+                    background: #4169E1;
+                    border: 2px solid transparent;
+                    color: white;
+                }
+            }
+        }
+
+    }
+
+    .bottom {
+        padding: 20px;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        overflow: auto;
+
+        @media (max-width:1024px) {
+            overflow: auto;
+        }
+    }
+}
