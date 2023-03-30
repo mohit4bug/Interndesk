@@ -81,6 +81,7 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (state) {
@@ -93,6 +94,7 @@ const Login = () => {
   // Handle Submit 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const response = await login({ email, password })
 
     if (response === "OK") {
@@ -106,6 +108,7 @@ const Login = () => {
     else {
       toast.error(response)
     }
+    setLoading(false);
   }
 
   return (
@@ -122,7 +125,7 @@ const Login = () => {
         </InputDiv>
         <InputDiv>
           {/* <CFormCheck id="flexCheckDefault" name='rememberMe' onChange={handleChange} label="Remember me" /> */}
-          <Button type='submit'>Login</Button>
+          <Button type='submit' disabled={loading}>{loading ? "Loading..." : "Login"}</Button>
         </InputDiv>
         <P>New to Internship desk? <Link to="/register">Register</Link></P>
 

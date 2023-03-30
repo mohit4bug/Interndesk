@@ -95,6 +95,7 @@ const Register = () => {
     password: '',
     registrationNumber: '',
   })
+  const [loading, setLoading] = useState(false);
 
   // Handling changes
   const handleChange = (e) => {
@@ -104,10 +105,10 @@ const Register = () => {
   // Handle submit 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await makeRequest.post("/auth/register", inputs);
       toast.success(res.data.message)
-      // console.log(res);
 
       if (res.data) {
         setTimeout(() => {
@@ -120,6 +121,7 @@ const Register = () => {
       toast.error(error.response.data.message)
     }
 
+    setLoading(false);
   }
 
   return (
@@ -166,7 +168,7 @@ const Register = () => {
           />
         </InputDiv>
         <InputDiv>
-          <Button type='submit'>Sign up</Button>
+          <Button type='submit' disabled={loading}>{loading ? "Loading..." : "Sign up"}</Button>
         </InputDiv>
         <P>Already registerd? <Link to="/ ">Login</Link></P>
       </Form>

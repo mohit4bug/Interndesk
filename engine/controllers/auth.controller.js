@@ -1,6 +1,7 @@
 const Student = require("../models/student.model");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
 
 const register = async (req, res) => {
 
@@ -42,9 +43,40 @@ const register = async (req, res) => {
 
         await newStudent.save();
 
-        res.status(201).json({
-            success: true,
-            message: 'Student registered successfully',
+        const token = jwt.sign({
+            email: newStudent.email
+        }, process.env.JWT_SECRET_EMAIL, {
+            expiresIn: "30m"
+        });
+
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'next.tsx@gmail.com',
+                pass: process.env.MAIL_SECRET
+            }
+        });
+        const mailOptions = {
+            from: 'next.tsx@gmail.com',
+            to: newStudent.email,
+            subject: 'Please verify your email address!',
+            text: `Click this link to verify your email address! 
+            <a href="http://localhost:8000/auth/verify/${token}">Click here</a>`
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Something went wrong try again!',
+                });
+            } else {
+                return res.status(201).json({
+                    success: true,
+                    message: 'Check your email to verify!',
+                });
+            }
         });
 
     } catch (err) {
@@ -70,6 +102,11 @@ const login = async (req, res) => {
         const isUser = await Student.findOne({ email });
         if (!isUser) {
             return res.status(401).json({ message: 'User not found!', success: false });
+        }
+
+        // check if verified
+        if (!isUser.verified) {
+            return res.status(401).json({ message: 'Please verify your email!', success: false });
         }
 
         const isMatch = await bcrypt.compare(req.body.password, isUser.password);
@@ -125,10 +162,29 @@ const authenticateUser = async (req, res) => {
     return res.status(201).json({ isAuthenticated: true, role: user.role });
 
 }
+const verifyEmail = async (req, res) => {
+    const { token } = req.params;
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_EMAIL);
+    const { iat, exp, email } = decoded;
+
+    if (iat > exp) {
+        return res.status(404).send("Token expired!");
+    }
+
+    const student = await Student.findOneAndUpdate({ email: email }, {
+        $set: {
+            verified: true
+        }
+    });
+    return res.status(201).redirect("http://localhost:5173/");
 
 
 
-module.exports = { register, login, logout, authenticateUser };
+}
+
+
+module.exports = { register, login, logout, authenticateUser, verifyEmail };
 
 
 
